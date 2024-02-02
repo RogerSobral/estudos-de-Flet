@@ -302,7 +302,16 @@ def main(page: Page):
 
     cardGeration.iconReceita.on_click=show_bs
 
+    dropCategoriaReceitas = SearchBar(
+        view_elevation=4,
+        divider_color=colors.AMBER,
+        bar_hint_text="Escolha uma categoria",
+        view_hint_text="Choose a color from the suggestions...",
+        controls=[
+            ListTile(title=Text("Outros"))
 
+        ],
+    )
 
 
     ViewReceita=BottomSheet(
@@ -348,8 +357,9 @@ def main(page: Page):
                                 Row(
                                     controls=[
                                         Row(controls=[
-                                            Icon(icons.CATEGORY),
-                                            Text("Outros"),]
+                                            #Continuar modificar aqui
+                                            OutlinedButton(icons.CATEGORY, on_click=lambda  _:dropCategoriaReceitas.open_view()),
+                                            ]
                                         ),
                                         Icon(icons.ADD)
                                     ],
