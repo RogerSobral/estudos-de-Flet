@@ -1,4 +1,5 @@
 from flet import *
+import datetime as dt
 #import plotly.express as px
 # pip install plotly-express
 class Login(UserControl):
@@ -274,8 +275,13 @@ def main(page: Page):
     page.horizontal_alignment=MainAxisAlignment.CENTER
     page.window_center()
     page.window_height=800
-
     cardGeration=CardGeneral()
+
+    radioRecorrente = RadioGroup(content=Row([
+        Radio(value="Não Recorrente", label="Não Recorrente"),
+        Radio(value="Fixa", label="Fixa"),
+        Radio(value="Parcelamento", label="Parcelamento")],
+    alignment=MainAxisAlignment.SPACE_AROUND))
 
     def show_bs(e):
         ViewReceita.open = True
@@ -285,24 +291,23 @@ def main(page: Page):
         ViewReceita.open = False
         ViewReceita.update()
 
+    def show_date(e):
+        date_receita.open=True
+        date_receita.update()
+
+    date_receita = DatePicker(
+        first_date=dt.datetime(1950, 10, 1),
+        last_date=dt.datetime(2050, 10, 1),
+    )
 
     cardGeration.iconReceita.on_click=show_bs
 
-    def showPopUpRecorrente(e):
 
-        popupRecorrenteReceita.adaptive=True
-        popupRecorrenteReceita.open=True
-        popupRecorrenteReceita.update()
 
-    popupRecorrenteReceita=AlertDialog(
-        content=RadioGroup(content=Column([
-            Radio(value="Não Recorrente", label="Não Recorrente"),
-            Radio(value="Parcelar", label="Parcelar"),
-            Radio(value="Fixa", label="Fixa")]))
-    )
 
     ViewReceita=BottomSheet(
-        enable_drag=True,
+
+        dismissible=False,
         is_scroll_controlled=True,
             content=Container(
                 content=Column(
@@ -314,22 +319,45 @@ def main(page: Page):
 
                         TextField(label="Descrição"),
                         TextField(label="Valor R$"),
-                        ElevatedButton(
-                            on_click=showPopUpRecorrente,
-                            content=Row(
-                                    controls=[
-                                        Icon(icons.REPLAY),
-                                        Text("Não Recorrente")
-                                    ]
-                            ),
-                            style=ButtonStyle(
-                                bgcolor=colors.GREEN_50,
-                                shape={
-                                        MaterialState.DEFAULT: RoundedRectangleBorder(radius=0)
-                                    },
-
-                            )
+                        radioRecorrente,
+                        Divider(height=1, color="black"),
+                        Row(
+                            controls=[
+                                Row(controls=[ Icon(icons.DATE_RANGE),
+                                Text("Data vencimento")]
+                                ),
+                                Text("Hoje")
+                            ],
+                            alignment=MainAxisAlignment.SPACE_BETWEEN
                         ),
+                        Divider(height=1, color="black"),
+                        Row(
+                            controls=[
+                                Row(controls=[
+                                    Icon(icons.CHECK_CIRCLE_OUTLINED),
+                                    Text("Realizada")
+                                ]),
+                                Switch( value=False)
+                            ],
+                            alignment=MainAxisAlignment.SPACE_BETWEEN
+                        ),
+                        Divider(height=1, color="black"),
+                        Column(
+                            controls=[
+                                Text("Categoria"),
+                                Row(
+                                    controls=[
+                                        Row(controls=[
+                                            Icon(icons.CATEGORY),
+                                            Text("Outros"),]
+                                        ),
+                                        Icon(icons.ADD)
+                                    ],
+                                    alignment=MainAxisAlignment.SPACE_BETWEEN
+                                )
+                            ]
+                        )
+
 
 
 
@@ -390,9 +418,6 @@ def main(page: Page):
         )
         if page.route=="/menu":
 
-
-
-
             page.views.append(
 
                 View(
@@ -448,6 +473,11 @@ def main(page: Page):
         page.views.pop()
         top_view = page.views[-1]
         page.go(top_view.route)
+
+
+    # Carregar o alerta
+
+
 
     page.on_route_change = changePage
     page.on_view_pop = view_pop
