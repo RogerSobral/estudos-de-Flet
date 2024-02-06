@@ -10,7 +10,7 @@ class Login(UserControl):
 
     def build(self):
 
-        img_top=Image("/img/login.svg")
+        # img_top=Image("img_login.png")
 
         name=TextField(label="Digite o seu nome")
         password = TextField(label="Digite sua senha",password=True)
@@ -30,7 +30,7 @@ class Login(UserControl):
         line_img = ResponsiveRow([
                         Column( col={"xs": 12, "sm":12, "md":8}, controls=[
 
-                            Column(col={"sm": 12,"md":8}, controls=[img_top],alignment=alignment.center),
+                            # Column(col={"sm": 12,"md":8}, controls=[img_top],alignment=alignment.center),
 
                             Column(col={"sm": 12, "md": 8},
                                    controls=[
@@ -302,16 +302,29 @@ def main(page: Page):
 
     cardGeration.iconReceita.on_click=show_bs
 
-    dropCategoriaReceitas = SearchBar(
-        view_elevation=4,
-        divider_color=colors.AMBER,
-        bar_hint_text="Escolha uma categoria",
-        view_hint_text="Choose a color from the suggestions...",
-        controls=[
-            ListTile(title=Text("Outros"))
+    optionsCategoryReceita=Dropdown(
+        hint_text="Escolha uma categoria",
 
+        options=[
+            dropdown.Option("Outros"),
+            dropdown.Option("Salário"),
+            dropdown.Option("Mentoria"),
+            dropdown.Option("Dividendos"),
         ],
     )
+
+    optionsCategoryConta = Dropdown(
+        hint_text="Escolha uma Conta",
+
+        options=[
+            dropdown.Option("Carteira"),
+            dropdown.Option("Poupança Santander"),
+            dropdown.Option("Poupança Nubank"),
+            dropdown.Option("Corrente Bradesco"),
+            dropdown.Option("Corrente Santander"),
+        ],
+    )
+
 
 
     ViewReceita=BottomSheet(
@@ -358,15 +371,52 @@ def main(page: Page):
                                     controls=[
                                         Row(controls=[
                                             #Continuar modificar aqui
-                                            OutlinedButton(icons.CATEGORY, on_click=lambda  _:dropCategoriaReceitas.open_view()),
+                                           optionsCategoryReceita,
                                             ]
                                         ),
                                         Icon(icons.ADD)
                                     ],
                                     alignment=MainAxisAlignment.SPACE_BETWEEN
-                                )
+                                ),
+
                             ]
+                        ),
+
+                        Divider(height=1, color="black"),
+
+                        Column(
+                            controls=[
+                                Text("Conta"),
+                                Row(
+                                    controls=[
+                                        Row(controls=[
+                                            # Continuar modificar aqui
+                                            optionsCategoryConta
+                                        ]
+                                        ),
+                                        Icon(icons.ADD)
+                                    ],
+                                    alignment=MainAxisAlignment.SPACE_BETWEEN
+                                ),
+
+                            ]
+                        ),
+                        Divider(height=1, color="black"),
+
+                        Container(content=Row(
+
+                            controls=[
+                            Icon(icons.SAVE),
+                            Text("Salvar")
+                        ],
+                        alignment=MainAxisAlignment.CENTER,
+                        ),
+
+                        bgcolor=colors.AMBER_500,
+                        margin=2,
+                        padding=3
                         )
+
 
 
 
@@ -497,4 +547,4 @@ def main(page: Page):
 
 
 
-app(target=main,assets_dir="assets")
+app(target=main, view=WEB_BROWSER)
