@@ -1,7 +1,11 @@
+# -*- coding: UTF-8 -*-
 from flet import *
 import datetime as dt
 #import plotly.express as px
 # pip install plotly-express
+
+
+
 class Login(UserControl):
 
     def __init__(self, evento):
@@ -277,11 +281,40 @@ def main(page: Page):
     page.window_height=800
     cardGeration=CardGeneral()
 
+    def close_dlg(e):
+        quantityParcelas.open = False
+        page.update()
+
+    quantityParcelas=AlertDialog(
+        modal=True,
+        title=Text("Parcelamento"),
+        content=Text("Em quantas vezes pretende resceber"),
+        actions=[
+            TextField(label="digite as prestações "),
+            TextButton("Salvar", on_click=close_dlg)
+        ],
+        actions_alignment=MainAxisAlignment.END,
+        on_dismiss=lambda e: print("cadastrado com sucesso"),
+    )
+
+
+
+
+    def changeRadioRecorrent(e):
+        if radioRecorrente.value=="Parcelamento":
+            print("é em prestação")
+            page.dialog =quantityParcelas
+            quantityParcelas.open=True
+            page.update()
+
+
+#Fazer com o qual não  feche a tela anterior 
     radioRecorrente = RadioGroup(content=Row([
         Radio(value="Não Recorrente", label="Não Recorrente"),
         Radio(value="Fixa", label="Fixa"),
         Radio(value="Parcelamento", label="Parcelamento")],
-    alignment=MainAxisAlignment.SPACE_AROUND))
+    alignment=MainAxisAlignment.SPACE_AROUND),
+    on_change=changeRadioRecorrent)
 
     def show_bs(e):
         ViewReceita.open = True
@@ -291,11 +324,18 @@ def main(page: Page):
         ViewReceita.open = False
         ViewReceita.update()
 
-    def show_date(e):
-        date_receita.open=True
-        date_receita.update()
+
+    textData=Text("Hoje")
+    def changeTextData(e):
+        textData.value= f"{date_receita.value.day}/{date_receita.value.month}/{date_receita.value.year}"
+        textData.update()
 
     date_receita = DatePicker(
+        date_picker_entry_mode=DatePickerEntryMode.CALENDAR_ONLY,
+        #Modificar para português as datas
+        help_text="Selecione entrada",
+        on_change=changeTextData,
+
         first_date=dt.datetime(1950, 10, 1),
         last_date=dt.datetime(2050, 10, 1),
     )
@@ -345,10 +385,11 @@ def main(page: Page):
                         Divider(height=1, color="black"),
                         Row(
                             controls=[
-                                Row(controls=[ Icon(icons.DATE_RANGE),
+                                Row(controls=[ IconButton(icons.CALENDAR_TODAY,on_click=
+                                                          lambda _: date_receita.pick_date()),
                                 Text("Data vencimento")]
                                 ),
-                                Text("Hoje")
+                                textData
                             ],
                             alignment=MainAxisAlignment.SPACE_BETWEEN
                         ),
@@ -429,6 +470,8 @@ def main(page: Page):
             )
         )
     page.overlay.append(ViewReceita) # inserido a tela de receita vindo de baixo
+
+    page.overlay.append(date_receita)
 
     nav_drawer = NavigationDrawer(controls=[
             Container(height=12),
@@ -547,4 +590,4 @@ def main(page: Page):
 
 
 
-app(target=main, view=WEB_BROWSER)
+app(target=main)
