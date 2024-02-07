@@ -308,7 +308,7 @@ def main(page: Page):
             page.update()
 
 
-#Fazer com o qual não  feche a tela anterior 
+#Fazer com o qual não  feche a tela anterior
     radioRecorrente = RadioGroup(content=Row([
         Radio(value="Não Recorrente", label="Não Recorrente"),
         Radio(value="Fixa", label="Fixa"),
