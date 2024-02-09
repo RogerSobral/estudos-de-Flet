@@ -282,7 +282,7 @@ def main(page: Page):
     page.window_center()
     page.window_height=800
     cardGeration=CardGeneral()
-    quantidadePrestacoes=TextField(label="1 x Vez", keyboard_type=KeyboardType.NUMBER, suffix_text="x vezes", width=90)
+    quantidadePrestacoes=TextField(label="1 x Vez", suffix_text="x vezes", width=100)
     textoRespostaPrestacoes = TextField(color=colors.RED, visible=False, width=90)
 
     dtz = dt.datetime.now()
