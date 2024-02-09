@@ -3,6 +3,8 @@ from flet import *
 import datetime as dt
 #import plotly.express as px
 # pip install plotly-express
+# pip install pytz
+import pytz
 
 
 
@@ -280,6 +282,18 @@ def main(page: Page):
     page.window_center()
     page.window_height=800
     cardGeration=CardGeneral()
+    quantidadePrestacoes=TextField(label="1 x Vez", keyboard_type=KeyboardType.NUMBER, suffix_text="x vezes", width=90)
+    textoRespostaPrestacoes = TextField(color=colors.RED, visible=False, width=90)
+
+    dtz = dt.datetime.now()
+    print(dtz)
+    print(dtz.tzname())
+    timezone = pytz.timezone("America/Sao_Paulo")
+    mtz=timezone.localize(dtz)
+    print(mtz.tzinfo)
+
+
+
 
     def close_dlg(e):
         quantityParcelas.open = False
@@ -290,7 +304,7 @@ def main(page: Page):
         title=Text("Parcelamento"),
         content=Text("Em quantas vezes pretende resceber"),
         actions=[
-            TextField(label="digite as prestações "),
+            quantidadePrestacoes,
             TextButton("Salvar", on_click=close_dlg)
         ],
         actions_alignment=MainAxisAlignment.END,
@@ -302,9 +316,12 @@ def main(page: Page):
 
     def changeRadioRecorrent(e):
         if radioRecorrente.value=="Parcelamento":
-            print("é em prestação")
-            page.dialog =quantityParcelas
+
             quantityParcelas.open=True
+            # textoRespostaPrestacoes.value=quantidadePrestacoes.value
+            print("Prestações ",quantidadePrestacoes.value)
+            # textoRespostaPrestacoes.visible=True
+
             page.update()
 
 
@@ -333,6 +350,7 @@ def main(page: Page):
     date_receita = DatePicker(
         date_picker_entry_mode=DatePickerEntryMode.CALENDAR_ONLY,
         #Modificar para português as datas
+        # locale=timezone.localize(),
         help_text="Selecione entrada",
         on_change=changeTextData,
 
@@ -381,7 +399,8 @@ def main(page: Page):
 
                         TextField(label="Descrição"),
                         TextField(label="Valor R$"),
-                        radioRecorrente,
+                        radioRecorrente,quantityParcelas,
+                        textoRespostaPrestacoes,
                         Divider(height=1, color="black"),
                         Row(
                             controls=[
