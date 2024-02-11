@@ -283,7 +283,9 @@ def main(page: Page):
     page.window_height=800
     cardGeration=CardGeneral()
     quantidadePrestacoes=TextField(label="1 x Vez", suffix_text="x vezes", width=100)
-    textoRespostaPrestacoes = TextField(color=colors.RED, visible=False, width=90)
+    textoRespostaPrestacoes = TextField(color=colors.BLUE, visible=False, width=90, suffix_text="x vezes", disabled=True)
+    descricaoReceita=TextField(label="Descrição" )
+    valorReceita=TextField(label="Valor R$")
 
     dtz = dt.datetime.now()
     print(dtz)
@@ -293,7 +295,22 @@ def main(page: Page):
     print(mtz.tzinfo)
 
 
+#criar a função de registrar, validando entradas
+    def registerReceita(e):
+        if not descricaoReceita.value:
+            descricaoReceita.error_text="Digite a Descrição"
+            descricaoReceita.update()
+        else:
+            descricaoReceita.error_text = ""
+            descricaoReceita.update()
 
+    def changeModalExpense(e):
+        quantityParcelas.open = False
+        textoRespostaPrestacoes.visible = True
+        textoRespostaPrestacoes.value = quantidadePrestacoes.value
+
+
+        page.update()
 
     def close_dlg(e):
         quantityParcelas.open = False
@@ -305,7 +322,7 @@ def main(page: Page):
         content=Text("Em quantas vezes pretende resceber"),
         actions=[
             quantidadePrestacoes,
-            TextButton("Salvar", on_click=close_dlg)
+            TextButton("Salvar", on_click=changeModalExpense)
         ],
         actions_alignment=MainAxisAlignment.END,
         on_dismiss=lambda e: print("cadastrado com sucesso"),
@@ -316,17 +333,13 @@ def main(page: Page):
 
     def changeRadioRecorrent(e):
         if radioRecorrente.value=="Parcelamento":
-
             quantityParcelas.open=True
-            # textoRespostaPrestacoes.value=quantidadePrestacoes.value
-            print("Prestações ",quantidadePrestacoes.value)
-            # textoRespostaPrestacoes.visible=True
 
             page.update()
 
 
 #Fazer com o qual não  feche a tela anterior
-    radioRecorrente = RadioGroup(content=Row([
+    radioRecorrente = RadioGroup( content=Row([
         Radio(value="Não Recorrente", label="Não Recorrente"),
         Radio(value="Fixa", label="Fixa"),
         Radio(value="Parcelamento", label="Parcelamento")],
@@ -397,10 +410,10 @@ def main(page: Page):
                             alignment=MainAxisAlignment.SPACE_BETWEEN
                         ),
 
-                        TextField(label="Descrição"),
-                        TextField(label="Valor R$"),
-                        radioRecorrente,quantityParcelas,
-                        textoRespostaPrestacoes,
+                        descricaoReceita,
+                        valorReceita,
+                        ResponsiveRow(controls=[Container(col=10,content=radioRecorrente,alignment=alignment.center),Container(col=2,content=textoRespostaPrestacoes,alignment=alignment.center)], alignment=MainAxisAlignment.SPACE_AROUND,vertical_alignment=CrossAxisAlignment.CENTER),quantityParcelas,
+
                         Divider(height=1, color="black"),
                         Row(
                             controls=[
@@ -474,7 +487,8 @@ def main(page: Page):
 
                         bgcolor=colors.AMBER_500,
                         margin=2,
-                        padding=3
+                        padding=3,
+                        on_click= registerReceita
                         )
 
 
