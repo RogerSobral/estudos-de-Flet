@@ -5,57 +5,8 @@ import datetime as dt
 # pip install plotly-express
 # pip install pytz
 import pytz
-
-
-
-class Login(UserControl):
-
-    def __init__(self, evento):
-        super().__init__()
-        self.evento=evento
-
-    def build(self):
-
-        # img_top=Image("img_login.png")
-
-        name=TextField(label="Digite o seu nome")
-        password = TextField(label="Digite sua senha",password=True)
-        btn_enter=ElevatedButton("Entrar",
-                                 style=ButtonStyle(
-                                     bgcolor=colors.GREEN_50,
-                                     shape={
-                                        MaterialState.DEFAULT: RoundedRectangleBorder(radius=0)
-
-                                    },
-                                 ),
-                                 width=360,
-                                 on_click=lambda  e: self.evento.go("/menu"),
-
-                                 )
-
-        line_img = ResponsiveRow([
-                        Column( col={"xs": 12, "sm":12, "md":8}, controls=[
-
-                            # Column(col={"sm": 12,"md":8}, controls=[img_top],alignment=alignment.center),
-
-                            Column(col={"sm": 12, "md": 8},
-                                   controls=[
-                                       name,
-                                       password,
-                                       Row(controls=[btn_enter],alignment=MainAxisAlignment.CENTER,)
-
-                                   ],
-                                   spacing=15
-
-
-                            )
-                        ],
-                        alignment=MainAxisAlignment.CENTER
-                        ), # final do responsivo
-            ],
-            alignment=MainAxisAlignment.CENTER
-        )
-        return line_img
+from views.login import Login
+from views.cardgeneral import CardGeneral
 
 
 class Graphics(UserControl):
@@ -80,154 +31,154 @@ class Graphics(UserControl):
         return None
 
 
-class CardGeneral(UserControl):
-    def __init__(self):
-        super().__init__()
-        self.card=Card()
-        self.iconReceita=IconButton(icons.ADD, icon_color=colors.BLUE)
-
-
-    def build(self):
-
-        self.card.content = Container(
-            content=Column(controls=[
-                            Row(
-                                controls=[
-                                    Container(content=Text("Visão Geral", size=20,weight=FontWeight.BOLD),padding=10)
-                                    ,
-                                          PopupMenuButton(
-
-                                              items=[
-                                                  PopupMenuItem(content=Checkbox(label="Receitas", value=False)),
-                                                  PopupMenuItem(content=Checkbox(label="Despesas", value=False)),
-                                                  PopupMenuItem(content=Checkbox(label="Contas", value=False)),
-                                                  PopupMenuItem(content=Checkbox(label="Cartões", value=False)),
-                                              ]
-                                          ),
-
-                                ],
-                                alignment=MainAxisAlignment.SPACE_BETWEEN
-
-                            ),# finish of first line
-
-                Row(controls=[# second of first line
-                    Container(
-                        content=Row([
-                                self.iconReceita,
-                                Column(controls=[
-                                    Text("Receita", size=18, weight=FontWeight.BOLD),
-                                    Text("Previsto", size=12)
-                                ])
-                            ]
-                        ),
-                        padding=10
-                    ),
-                    Container(content=Column(
-                        controls=[
-                        Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                        Text("R$ 0,00", size=12)
-                         ],
-
-                    ),
-                        padding=10
-                    )
-
-
-                ],
-                 alignment = MainAxisAlignment.SPACE_BETWEEN,
-
-                ), #finish of second line
-
-                Row(controls=[  #  third line
-                    Container(
-                        content=Row(
-                            controls=[
-                                IconButton(icons.REMOVE_CIRCLE, icon_color=colors.RED),
-                                Column(controls=[
-                                    Text("Despesa", size=18, weight=FontWeight.BOLD),
-                                    Text("Previsto", size=12)
-                                ])
-                            ]
-                        ),
-                        padding=10
-                    ),
-                    Container(content=Column(
-                        controls=[
-                            Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                            Text("R$ 0,00", size=12)
-                        ],
-
-                    ),
-                        padding=10
-                    )
-
-                ],
-                    alignment=MainAxisAlignment.SPACE_BETWEEN,
-
-                ),  # finish of third line
-
-                Row(controls=[  # forth   line
-                    Container(
-                        content=Row(
-                            controls=[
-                                IconButton(icons.WALLET, icon_color=colors.PURPLE),
-                                Column(controls=[
-                                    Text("Conta", size=18, weight=FontWeight.BOLD),
-                                    Text("Previsto", size=12)
-                                ])
-                            ]
-                        ),
-                        padding=10
-                    ),
-                    Container(content=Column(
-                        controls=[
-                            Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                            Text("R$ 0,00", size=12)
-                        ],
-
-                    ),
-                        padding=10
-                    )
-
-                ],
-                    alignment=MainAxisAlignment.SPACE_BETWEEN,
-
-                ),  # finish of forth line
-
-                Row(controls=[  # fifth line
-                    Container(
-                        content=Row(
-                            controls=[
-                                IconButton(icons.CREDIT_CARD, icon_color=colors.GREEN_400),
-                                Column(controls=[
-                                    Text("Cartão de Credito", size=18, weight=FontWeight.BOLD),
-                                    Text("Previsto", size=12)
-                                ])
-                            ]
-                        ),
-                        padding=10
-                    ),
-                    Container(content=Column(
-                        controls=[
-                            Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                            Text("R$ 0,00", size=12)
-                        ],
-
-                    ),
-                        padding=10
-                    )
-
-                ],
-                    alignment=MainAxisAlignment.SPACE_BETWEEN,
-
-                )  # finish of forth line
-
-            ]
-
-            ))
-
-
-        return self.card
+# class CardGeneral(UserControl):
+#     def __init__(self):
+#         super().__init__()
+#         self.card=Card()
+#         self.iconReceita=IconButton(icons.ADD, icon_color=colors.BLUE)
+#
+#
+#     def build(self):
+#
+#         self.card.content = Container(
+#             content=Column(controls=[
+#                             Row(
+#                                 controls=[
+#                                     Container(content=Text("Visão Geral", size=20,weight=FontWeight.BOLD),padding=10)
+#                                     ,
+#                                           PopupMenuButton(
+#
+#                                               items=[
+#                                                   PopupMenuItem(content=Checkbox(label="Receitas", value=False)),
+#                                                   PopupMenuItem(content=Checkbox(label="Despesas", value=False)),
+#                                                   PopupMenuItem(content=Checkbox(label="Contas", value=False)),
+#                                                   PopupMenuItem(content=Checkbox(label="Cartões", value=False)),
+#                                               ]
+#                                           ),
+#
+#                                 ],
+#                                 alignment=MainAxisAlignment.SPACE_BETWEEN
+#
+#                             ),# finish of first line
+#
+#                 Row(controls=[# second of first line
+#                     Container(
+#                         content=Row([
+#                                 self.iconReceita,
+#                                 Column(controls=[
+#                                     Text("Receita", size=18, weight=FontWeight.BOLD),
+#                                     Text("Previsto", size=12)
+#                                 ])
+#                             ]
+#                         ),
+#                         padding=10
+#                     ),
+#                     Container(content=Column(
+#                         controls=[
+#                         Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
+#                         Text("R$ 0,00", size=12)
+#                          ],
+#
+#                     ),
+#                         padding=10
+#                     )
+#
+#
+#                 ],
+#                  alignment = MainAxisAlignment.SPACE_BETWEEN,
+#
+#                 ), #finish of second line
+#
+#                 Row(controls=[  #  third line
+#                     Container(
+#                         content=Row(
+#                             controls=[
+#                                 IconButton(icons.REMOVE_CIRCLE, icon_color=colors.RED),
+#                                 Column(controls=[
+#                                     Text("Despesa", size=18, weight=FontWeight.BOLD),
+#                                     Text("Previsto", size=12)
+#                                 ])
+#                             ]
+#                         ),
+#                         padding=10
+#                     ),
+#                     Container(content=Column(
+#                         controls=[
+#                             Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
+#                             Text("R$ 0,00", size=12)
+#                         ],
+#
+#                     ),
+#                         padding=10
+#                     )
+#
+#                 ],
+#                     alignment=MainAxisAlignment.SPACE_BETWEEN,
+#
+#                 ),  # finish of third line
+#
+#                 Row(controls=[  # forth   line
+#                     Container(
+#                         content=Row(
+#                             controls=[
+#                                 IconButton(icons.WALLET, icon_color=colors.PURPLE),
+#                                 Column(controls=[
+#                                     Text("Conta", size=18, weight=FontWeight.BOLD),
+#                                     Text("Previsto", size=12)
+#                                 ])
+#                             ]
+#                         ),
+#                         padding=10
+#                     ),
+#                     Container(content=Column(
+#                         controls=[
+#                             Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
+#                             Text("R$ 0,00", size=12)
+#                         ],
+#
+#                     ),
+#                         padding=10
+#                     )
+#
+#                 ],
+#                     alignment=MainAxisAlignment.SPACE_BETWEEN,
+#
+#                 ),  # finish of forth line
+#
+#                 Row(controls=[  # fifth line
+#                     Container(
+#                         content=Row(
+#                             controls=[
+#                                 IconButton(icons.CREDIT_CARD, icon_color=colors.GREEN_400),
+#                                 Column(controls=[
+#                                     Text("Cartão de Credito", size=18, weight=FontWeight.BOLD),
+#                                     Text("Previsto", size=12)
+#                                 ])
+#                             ]
+#                         ),
+#                         padding=10
+#                     ),
+#                     Container(content=Column(
+#                         controls=[
+#                             Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
+#                             Text("R$ 0,00", size=12)
+#                         ],
+#
+#                     ),
+#                         padding=10
+#                     )
+#
+#                 ],
+#                     alignment=MainAxisAlignment.SPACE_BETWEEN,
+#
+#                 )  # finish of forth line
+#
+#             ]
+#
+#             ))
+#
+#
+#         return self.card
 
 class CardEconomicMonths(UserControl):
 
@@ -281,7 +232,10 @@ def main(page: Page):
     page.horizontal_alignment=MainAxisAlignment.CENTER
     page.window_center()
     page.window_height=800
+    # Views
+    login=Login(page)
     cardGeration=CardGeneral()
+
     quantidadePrestacoes=TextField(label="1 x Vez", suffix_text="x vezes", width=100)
     textoRespostaPrestacoes = TextField(color=colors.BLUE, visible=False, width=90, suffix_text="x vezes", disabled=True)
     descricaoReceita=TextField(label="Descrição" )
@@ -548,7 +502,7 @@ def main(page: Page):
             View(
                 "/",
                 [
-                    Login(page)
+                    login
                 ]
             )
         )
@@ -623,4 +577,4 @@ def main(page: Page):
 
 
 
-app(target=main)
+app(target=main, assets_dir="assets")
