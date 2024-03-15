@@ -39,7 +39,8 @@ class Login(UserControl):
         lineBntRegister=Row(col={"xs": 6,"sm":2,"md":3},controls=[self.btn_enter])
         lineIcons=Row(controls=[self.iconGoogle, self.recoverPassWord],alignment=MainAxisAlignment.SPACE_AROUND)
         line_img = ResponsiveRow([
-                        Column( col={"xs": 10, "sm":8, "md":6,"lg":4}, controls=[
+
+                        Column(col={"xs": 10, "sm":8, "md":6,"lg":4}, controls=[
 
                             Column(col={"xs": 6,"sm":2,"md":3}, controls=[img_top],alignment=alignment.center),
 

@@ -7,7 +7,8 @@ import datetime as dt
 import pytz
 from views.login import Login
 from views.cardgeneral import CardGeneral
-
+from views.viewMenu import ViewMenu
+from views.cardEconomicMonths import CardEconomicMonths
 
 class Graphics(UserControl):
 
@@ -31,200 +32,9 @@ class Graphics(UserControl):
         return None
 
 
-# class CardGeneral(UserControl):
-#     def __init__(self):
-#         super().__init__()
-#         self.card=Card()
-#         self.iconReceita=IconButton(icons.ADD, icon_color=colors.BLUE)
-#
-#
-#     def build(self):
-#
-#         self.card.content = Container(
-#             content=Column(controls=[
-#                             Row(
-#                                 controls=[
-#                                     Container(content=Text("Visão Geral", size=20,weight=FontWeight.BOLD),padding=10)
-#                                     ,
-#                                           PopupMenuButton(
-#
-#                                               items=[
-#                                                   PopupMenuItem(content=Checkbox(label="Receitas", value=False)),
-#                                                   PopupMenuItem(content=Checkbox(label="Despesas", value=False)),
-#                                                   PopupMenuItem(content=Checkbox(label="Contas", value=False)),
-#                                                   PopupMenuItem(content=Checkbox(label="Cartões", value=False)),
-#                                               ]
-#                                           ),
-#
-#                                 ],
-#                                 alignment=MainAxisAlignment.SPACE_BETWEEN
-#
-#                             ),# finish of first line
-#
-#                 Row(controls=[# second of first line
-#                     Container(
-#                         content=Row([
-#                                 self.iconReceita,
-#                                 Column(controls=[
-#                                     Text("Receita", size=18, weight=FontWeight.BOLD),
-#                                     Text("Previsto", size=12)
-#                                 ])
-#                             ]
-#                         ),
-#                         padding=10
-#                     ),
-#                     Container(content=Column(
-#                         controls=[
-#                         Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-#                         Text("R$ 0,00", size=12)
-#                          ],
-#
-#                     ),
-#                         padding=10
-#                     )
-#
-#
-#                 ],
-#                  alignment = MainAxisAlignment.SPACE_BETWEEN,
-#
-#                 ), #finish of second line
-#
-#                 Row(controls=[  #  third line
-#                     Container(
-#                         content=Row(
-#                             controls=[
-#                                 IconButton(icons.REMOVE_CIRCLE, icon_color=colors.RED),
-#                                 Column(controls=[
-#                                     Text("Despesa", size=18, weight=FontWeight.BOLD),
-#                                     Text("Previsto", size=12)
-#                                 ])
-#                             ]
-#                         ),
-#                         padding=10
-#                     ),
-#                     Container(content=Column(
-#                         controls=[
-#                             Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-#                             Text("R$ 0,00", size=12)
-#                         ],
-#
-#                     ),
-#                         padding=10
-#                     )
-#
-#                 ],
-#                     alignment=MainAxisAlignment.SPACE_BETWEEN,
-#
-#                 ),  # finish of third line
-#
-#                 Row(controls=[  # forth   line
-#                     Container(
-#                         content=Row(
-#                             controls=[
-#                                 IconButton(icons.WALLET, icon_color=colors.PURPLE),
-#                                 Column(controls=[
-#                                     Text("Conta", size=18, weight=FontWeight.BOLD),
-#                                     Text("Previsto", size=12)
-#                                 ])
-#                             ]
-#                         ),
-#                         padding=10
-#                     ),
-#                     Container(content=Column(
-#                         controls=[
-#                             Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-#                             Text("R$ 0,00", size=12)
-#                         ],
-#
-#                     ),
-#                         padding=10
-#                     )
-#
-#                 ],
-#                     alignment=MainAxisAlignment.SPACE_BETWEEN,
-#
-#                 ),  # finish of forth line
-#
-#                 Row(controls=[  # fifth line
-#                     Container(
-#                         content=Row(
-#                             controls=[
-#                                 IconButton(icons.CREDIT_CARD, icon_color=colors.GREEN_400),
-#                                 Column(controls=[
-#                                     Text("Cartão de Credito", size=18, weight=FontWeight.BOLD),
-#                                     Text("Previsto", size=12)
-#                                 ])
-#                             ]
-#                         ),
-#                         padding=10
-#                     ),
-#                     Container(content=Column(
-#                         controls=[
-#                             Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-#                             Text("R$ 0,00", size=12)
-#                         ],
-#
-#                     ),
-#                         padding=10
-#                     )
-#
-#                 ],
-#                     alignment=MainAxisAlignment.SPACE_BETWEEN,
-#
-#                 )  # finish of forth line
-#
-#             ]
-#
-#             ))
-#
-#
-#         return self.card
-
-class CardEconomicMonths(UserControl):
-
-    def __init__(self):
-        super().__init__()
-        self.card=Card()
 
 
-    def build(self):
 
-        self.card.content=Container(
-            margin=10,
-            alignment=alignment.center,
-            content=Row(
-                controls=[
-                  Row(controls=[
-                      Column(
-                          controls=[
-                                   Text("Balanço Mensal", size=18, weight=FontWeight.BOLD),
-                                   Text("R$0.00", size=18, weight=FontWeight.W_500),
-                                   Text("Valor em Caixa")
-
-                          ]
-                      ),
-                      Column(
-                          controls=[
-                              Text("Receita Consideradas", size=12, weight=FontWeight.BOLD),
-                              Text("R$0,00", size=10, color=colors.BLUE),
-                              Text("Despesas Consideradas ", size=12, weight=FontWeight.BOLD),
-                              Text("R$0,00", size=10, color=colors.RED)
-
-                          ]
-
-                      )
-                   ],
-                      alignment=MainAxisAlignment.SPACE_BETWEEN
-                  )
-                ],
-                alignment=MainAxisAlignment.SPACE_BETWEEN
-            ),# finish of content
-            # Here I go config paraters
-            padding=10,
-
-        )
-
-        return self.card
 
 
 def main(page: Page):
@@ -232,13 +42,26 @@ def main(page: Page):
     page.horizontal_alignment=MainAxisAlignment.CENTER
     page.window_center()
     page.window_height=800
+
+    # Functions of open
+    def show_nav_drawer(e):
+        nav_drawer.open = True
+        nav_drawer.update()
+
     # Views
     login=Login(page)
+    appBar=ViewMenu()
+    appBar.iconBtn.on_click=show_nav_drawer
+
+    # Cards
     cardGeration=CardGeneral()
+    cardEconomicMonths=CardEconomicMonths()
+
+
 
     quantidadePrestacoes=TextField(label="1 x Vez", suffix_text="x vezes", width=100)
     textoRespostaPrestacoes = TextField(color=colors.BLUE, visible=False, width=90, suffix_text="x vezes", disabled=True)
-    descricaoReceita=TextField(label="Descrição" )
+    descricaoReceita=TextField(label="Descrição")
     valorReceita=TextField(label="Valor R$")
 
     dtz = dt.datetime.now()
@@ -490,9 +313,7 @@ def main(page: Page):
 
 
 
-    def show_nav_drawer(e):
-        nav_drawer.open=True
-        nav_drawer.update()
+
 
 
     def changePage(route):
@@ -511,41 +332,14 @@ def main(page: Page):
             page.views.append(
 
                 View(
-
                     "/menu",
                     [
-                        AppBar(
-                            leading=IconButton(icons.MENU, icon_color=colors.WHITE, on_click=show_nav_drawer),
-                            leading_width=40,
-                            bgcolor=colors.BLACK,
-                            title=Row(controls=[
-                                IconButton(icons.ARROW_BACK_IOS, icon_color=colors.WHITE),
-                                Text("Janeiro", color=colors.WHITE),
-                                IconButton(icons.ARROW_FORWARD_IOS, icon_color=colors.WHITE),
-                            ], alignment=MainAxisAlignment.SPACE_AROUND),
-                            center_title=False,
-                            color=colors.WHITE,
 
-                            actions=[
-
-                                PopupMenuButton(
-
-                                    items=[
-                                        PopupMenuItem(text="Despesas"),
-                                        PopupMenuItem(text="Receitas"),  # divider
-
-                                    ]
-
-                                ),
-
-                            ],
-                        )
-
-                        ,ElevatedButton("Voltar", on_click=lambda e: page.go("/")),
-
+                        appBar
+                        ,ElevatedButton("Logout", on_click=lambda e: page.go("/")),
 
                        cardGeration,
-                       CardEconomicMonths(),
+                       cardEconomicMonths,
 
 
 
