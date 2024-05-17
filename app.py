@@ -5,10 +5,10 @@ import datetime as dt
 # pip install plotly-express
 # pip install pytz
 import pytz
-from views.login import Login
-from views.cardgeneral import CardGeneral
-from views.viewMenu import ViewMenu
-from views.cardEconomicMonths import CardEconomicMonths
+from src.views.login import Login
+from src.views.cardgeneral import CardGeneral
+from src.views import ViewMenu
+from src.views import CardEconomicMonths
 
 class Graphics(UserControl):
 

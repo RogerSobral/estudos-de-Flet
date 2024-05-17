@@ -2,11 +2,11 @@ from flet import *
 
 class Login(UserControl):
 
-    def __init__(self, evento):
+    def __init__(self ):
         super().__init__()
-        self.evento=evento
+
         self.name=TextField(label="Digite o seu nome")
-        self.password = TextField(label="Digite sua senha", password=True)
+        self.password = TextField(label="Digite sua senha", password=True,can_reveal_password=True)
         self.recoverPassWord=TextButton(text="Recuperar Senha",
                                         style=ButtonStyle(
                                             bgcolor={
@@ -28,9 +28,6 @@ class Login(UserControl):
                                     },
                                      color="#ffffff"
                                  ),
-
-                                 on_click=lambda  e: self.evento.go("/menu"),
-
                                  )
 
     def build(self):
@@ -38,11 +35,12 @@ class Login(UserControl):
         img_top=Image("img_login.png")
         lineBntRegister=Row(col={"xs": 6,"sm":2,"md":3},controls=[self.btn_enter])
         lineIcons=Row(controls=[self.iconGoogle, self.recoverPassWord],alignment=MainAxisAlignment.SPACE_AROUND)
-        line_img = ResponsiveRow([
+        layout = ResponsiveRow([
 
-                        Column(col={"xs": 10, "sm":8, "md":6,"lg":4}, controls=[
+                        Column(col={"xs": 10, "sm":8, "md":6,"lg":5,"xl":3}, controls=[
 
-                            Column(col={"xs": 6,"sm":2,"md":3}, controls=[img_top],alignment=alignment.center),
+                            Column(col={"xs": 6,"sm":2,"md":1,"lg":2,"xl":1}, controls=[img_top],
+                                   alignment=alignment.center),
 
                             Column(col={"sm": 12, "md": 8},
                                    controls=[
@@ -61,4 +59,4 @@ class Login(UserControl):
             ],
             alignment=MainAxisAlignment.CENTER
         )
-        return line_img
+        return layout
