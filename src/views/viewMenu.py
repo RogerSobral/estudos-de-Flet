@@ -4,10 +4,11 @@ class ViewMenu(AppBar):
 
     def __init__(self):
         super().__init__()
+
         self.iconBtn=IconButton(icons.MENU, icon_color=colors.WHITE)
         self.leading=self.iconBtn
         self.leading_width=40
-        self.bgcolor = colors.BLACK
+        self.bgcolor = "#65469b"
         self.title=Row(controls=[
                 IconButton(icons.ARROW_BACK_IOS, icon_color=colors.WHITE),
                 Text("Janeiro", color=colors.WHITE),

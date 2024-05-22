@@ -174,7 +174,7 @@ def main(page: Page):
     )
 
 
-
+#Carde da receita
     ViewReceita=BottomSheet(
 
         dismissible=False,

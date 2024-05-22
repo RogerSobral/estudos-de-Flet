@@ -1,13 +1,15 @@
 from flet import *
 from .constructor.login_contructor import loginConstructo
-from .constructor.menuPrincipal_constructor import menuConstructor
-
+from src.main.constructor.menuPrincipal_constructor import menuConstructor
+from src.main.constructor.summaryPainelConstructor import summaryPanelConstructor
 def main(page: Page):
     page.title="Finanças"
     page.horizontal_alignment=MainAxisAlignment.CENTER
     page.window_center()
-
+ 
     page.window_min_width=320
+    barMenu=menuConstructor()
+
 
 
 
@@ -30,12 +32,13 @@ def main(page: Page):
                     "/menu",
                     [
 
+                        barMenu.barMenuController,
+                        summaryPanelConstructor()
 
-                            menuConstructor()
 
-
-                       ],
+                      ],
                     # Aqui começa o drawer
+                    drawer=barMenu.drawerOptionController
 
 
                 )
@@ -50,9 +53,6 @@ def main(page: Page):
 
 
     # Carregar o alerta
-
-
-
     page.on_route_change = changePage
     page.on_view_pop = view_pop
     page.go(page.route)

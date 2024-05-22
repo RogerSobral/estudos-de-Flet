@@ -2,7 +2,7 @@ from flet import *
 
 class Login(UserControl):
 
-    def __init__(self ):
+    def __init__(self):
         super().__init__()
 
         self.name=TextField(label="Digite o seu nome")
