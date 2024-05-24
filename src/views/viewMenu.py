@@ -9,21 +9,22 @@ class ViewMenu(AppBar):
         self.leading=self.iconBtn
         self.leading_width=40
         self.bgcolor = "#65469b"
+        self.month=Text("Janeiro", color=colors.WHITE)
+        self.backMonth=IconButton(icons.ARROW_BACK_IOS, icon_color=colors.WHITE)
+        self.nextMonth=IconButton(icons.ARROW_FORWARD_IOS, icon_color=colors.WHITE)
+
         self.title=Row(controls=[
-                IconButton(icons.ARROW_BACK_IOS, icon_color=colors.WHITE),
-                Text("Janeiro", color=colors.WHITE),
-                IconButton(icons.ARROW_FORWARD_IOS, icon_color=colors.WHITE),
+                self.backMonth,
+                self.month,
+                self.nextMonth
             ], alignment=MainAxisAlignment.SPACE_AROUND)
         self.center_title = False
         self.color=colors.WHITE
         self.actions=[
-
                 PopupMenuButton(
-
                     items=[
-                        PopupMenuItem(text="Despesas"),
-                        PopupMenuItem(text="Receitas"),  # divider
-
+                        PopupMenuItem(text="Arquivos"),
+                        PopupMenuItem(text="Configurações")  # divider
                     ]
 
                 ),

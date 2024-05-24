@@ -4,25 +4,48 @@ class SummaryPainelView(UserControl):
 
     def __init__(self):
         super().__init__()
+        self.cardGraphic=Card()
         self.card = Card()
-        self.iconReceita = IconButton(icons.ADD, icon_color=colors.BLUE)
-
-    def build(self):
-        self.card.content = Container(
-            content=Column(controls=[
-                Row(
-                    controls=[
-                        Container(content=Text("Visão Geral", size=20, weight=FontWeight.BOLD), padding=10)
-                        ,
-                        PopupMenuButton(
-
+        self.optionHide= PopupMenuButton(
                             items=[
                                 PopupMenuItem(content=Checkbox(label="Receitas", value=False)),
                                 PopupMenuItem(content=Checkbox(label="Despesas", value=False)),
                                 PopupMenuItem(content=Checkbox(label="Contas", value=False)),
                                 PopupMenuItem(content=Checkbox(label="Cartões", value=False)),
                             ]
-                        ),
+                        )
+        self.receitaReal=Text("R$ 0,00", size=16, weight=FontWeight.BOLD)
+        self.receitaPrevista =Text("R$ 0,00", size=12)
+        self.despesaReal = Text("R$ 0,00", size=16, weight=FontWeight.BOLD)
+        self.despesaPrevista = Text("R$ 0,00", size=12)
+        self.contaReal = Text("R$ 0,00", size=16, weight=FontWeight.BOLD)
+        self.contaPrevista = Text("R$ 0,00", size=12)
+        self.cataoReal = Text("R$ 0,00", size=16, weight=FontWeight.BOLD)
+        self.cartaoPrevisto = Text("R$ 0,00", size=12)
+        self.valorCaixa=Text("R$0.00", size=18, weight=FontWeight.W_500)
+        self.receitasConsideradas=Text("R$0,00", size=10, color=colors.BLUE)
+        self.despesasConsideradas = Text("R$0,00", size=10, color=colors.BLUE)
+
+        self.card2=Card()
+        self.iconReceita = IconButton(icons.ADD, icon_color=colors.BLUE)
+        self.scroll=Column(scroll=ScrollMode.ADAPTIVE)
+
+    def build(self):
+        self.cardGraphic.content=Container(margin=10,
+                                           content=Column(controls=[
+                                               Row(controls=[Text("Balanço Mensal", size=18, weight=FontWeight.BOLD)]),
+                                           #Grafico vem aqui
+                                               Text("Grafico")
+                                           ])
+                                           )
+        self.card.content = Container(
+            content=Column(controls=[
+                Row(
+                    controls=[
+                        Container(content=Text("Visão Geral", size=20, weight=FontWeight.BOLD), padding=10)
+                        ,
+                    self.optionHide
+                       ,
 
                     ],
                     alignment=MainAxisAlignment.SPACE_BETWEEN
@@ -43,8 +66,8 @@ class SummaryPainelView(UserControl):
                     ),
                     Container(content=Column(
                         controls=[
-                            Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                            Text("R$ 0,00", size=12)
+                            self.receitaReal,
+                            self.receitaPrevista
                         ],
 
                     ),
@@ -71,8 +94,8 @@ class SummaryPainelView(UserControl):
                     ),
                     Container(content=Column(
                         controls=[
-                            Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                            Text("R$ 0,00", size=12)
+                            self.despesaReal,
+                            self.despesaPrevista
                         ],
 
                     ),
@@ -99,8 +122,8 @@ class SummaryPainelView(UserControl):
                     ),
                     Container(content=Column(
                         controls=[
-                            Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                            Text("R$ 0,00", size=12)
+                            self.contaReal,
+                            self.contaPrevista
                         ],
 
                     ),
@@ -127,8 +150,8 @@ class SummaryPainelView(UserControl):
                     ),
                     Container(content=Column(
                         controls=[
-                            Text("R$ 0,00", size=16, weight=FontWeight.BOLD),
-                            Text("R$ 0,00", size=12)
+                            self.cataoReal,
+                            self.cartaoPrevisto
                         ],
 
                     ),
@@ -141,7 +164,42 @@ class SummaryPainelView(UserControl):
                 )  # finish of forth line
 
             ]
-
             ))
 
-        return self.card
+        self.card2.content=Container(
+            margin=10,
+            content=Column(controls=[Row(controls=[Text("Balanço Mensal", size=18, weight=FontWeight.BOLD)]),
+                                     Row(controls=[
+                                         Column(controls=[
+                                             Column(controls=[
+                                                 self.valorCaixa,
+                                                 Text("Valor em Caixa")]),
+
+                                         ], ),
+
+                                         Column(
+                                             controls=[
+                                                 Text("Receita Consideradas", size=12, weight=FontWeight.BOLD),
+                                                 self.receitasConsideradas,
+                                                 Text("Despesas Consideradas ", size=12, weight=FontWeight.BOLD),
+                                                 self.despesasConsideradas
+
+                                             ]
+
+                                         )
+
+                                     ],
+                                         alignment=MainAxisAlignment.SPACE_BETWEEN
+                                     )
+
+                                     ])
+        )
+
+
+
+
+        self.scroll.controls.append(self.cardGraphic)
+        self.scroll.controls.append(self.card)
+        self.scroll.controls.append(self.card2)
+        return self.scroll
+

@@ -6,8 +6,7 @@ def main(page: Page):
     page.title="Finanças"
     page.horizontal_alignment=MainAxisAlignment.CENTER
     page.window_center()
- 
-    page.window_min_width=320
+    page.window_min_width=340
     barMenu=menuConstructor()
 
 
@@ -38,7 +37,8 @@ def main(page: Page):
 
                       ],
                     # Aqui começa o drawer
-                    drawer=barMenu.drawerOptionController
+                    drawer=barMenu.drawerOptionController,
+                    scroll=ScrollMode.ALWAYS
 
 
                 )
