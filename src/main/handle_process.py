@@ -32,7 +32,7 @@ def main(page: Page):
                     [
 
                         barMenu.barMenuController,
-                        summaryPanelConstructor()
+                        summaryPanelConstructor().summaryPanel
 
 
                       ],
@@ -51,7 +51,7 @@ def main(page: Page):
         top_view = page.views[-1]
         page.go(top_view.route)
 
-
+    page.overlay.append(summaryPanelConstructor().cardIncome)
     # Carregar o alerta
     page.on_route_change = changePage
     page.on_view_pop = view_pop

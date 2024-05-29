@@ -7,8 +7,8 @@ import datetime as dt
 import pytz
 from src.views.login import Login
 from src.views.cardgeneral import CardGeneral
-from src.views import ViewMenu
-from src.views import CardEconomicMonths
+from src.views.viewMenu import ViewMenu
+from src.views.cardEconomicMonths import CardEconomicMonths
 
 class Graphics(UserControl):
 
