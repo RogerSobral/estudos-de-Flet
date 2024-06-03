@@ -5,16 +5,13 @@ class CardIncomeView(BottomSheet):
         super().__init__()
         self.descricaoReceita = TextField(label="Descrição")
         self.valorReceita = TextField(label="Valor R$")
+        self.btnClose=IconButton(icons.CLOSE_ROUNDED)
         self.quantidadePrestacoes = TextField(label="1 x Vez", suffix_text="x vezes", width=100)
         self.textoRespostaPrestacoes = TextField(color=colors.BLUE, visible=False, width=90, suffix_text="x vezes",
                                             disabled=True)
         self.date_receita = DatePicker(
             date_picker_entry_mode=DatePickerEntryMode.CALENDAR_ONLY,
-            # Modificar para português as datas
-            # locale=timezone.localize(),
             help_text="Selecione entrada",
-           # on_change=changeTextData,
-
             first_date=dt.datetime(1950, 10, 1),
             last_date=dt.datetime(2050, 10, 1),
         )
@@ -48,6 +45,7 @@ class CardIncomeView(BottomSheet):
             Radio(value="Fixa", label="Fixa"),
             Radio(value="Parcelamento", label="Parcelamento")],
             alignment=MainAxisAlignment.SPACE_AROUND))
+
         self.quantityParcelas = AlertDialog(
             modal=True,
             title=Text("Parcelamento"),
@@ -65,7 +63,7 @@ class CardIncomeView(BottomSheet):
                 content=Column(
                     [
                         Row(controls=[Text("Cadastro de Receita", size=18, weight=FontWeight.BOLD),
-                            IconButton(icons.CLOSE_ROUNDED)],
+                            self.btnClose],
                             alignment=MainAxisAlignment.SPACE_BETWEEN
                         ),
                         self.descricaoReceita,
