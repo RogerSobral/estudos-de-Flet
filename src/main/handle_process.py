@@ -3,14 +3,13 @@ from .constructor.login_contructor import loginConstructo
 from src.main.constructor.menuPrincipal_constructor import menuConstructor
 from src.main.constructor.summaryPainelConstructor import summaryPanelConstructor
 def main(page: Page):
+
     page.title="Finanças"
     page.horizontal_alignment=MainAxisAlignment.CENTER
     page.window_center()
     page.window_min_width=340
     barMenu=menuConstructor()
     summaryPanel=summaryPanelConstructor()
-
-
 
 
     def changePage(route):
@@ -34,14 +33,10 @@ def main(page: Page):
 
                         barMenu.barMenuController,
                         summaryPanel.summaryPanel
-
-
                       ],
                     # Aqui começa o drawer
                     drawer=barMenu.drawerOptionController,
                     scroll=ScrollMode.ALWAYS
-
-
                 )
             )
 
