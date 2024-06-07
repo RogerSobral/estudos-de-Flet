@@ -3,6 +3,7 @@ from sqlite3 import connect
 class IncomeModel:
 
     def __init__(self,db_file):
+        self.db_file=db_file
         self.connection = connect(db_file)
         self.cursor = self.connection.cursor()
         self.create_table()
@@ -12,14 +13,40 @@ class IncomeModel:
          CREATE TABLE IF NOT EXISTS  income(
          id INTEGER PRIMARY KEY AUTOINCREMENT,
          description TEXT NOT NULL,
-         value_income REAL NOT NULL,
-         installment integer,
-         due_date TEXT,
-         status INTEGER,
          id_category INTEGER DEFAULT 1 ,
-         id_account INTEGER DEFAULT 1,
+       
          FOREIGN KEY (id_category) REFERENCES category_income (id)
-         FOREIGN KEY (id_account) REFERENCES account_income (id)
         );
         """)
         self.connection.commit()
+
+    def addCategory(self, name) -> None:
+        self.newConnect()
+        try:
+            self.cursor.execute("""
+                             INSERT INTO category_income(name)
+                             VALUES(?)
+
+                            """, (name,))
+            self.connection.commit()
+        except Exception as e:
+            print("Essa Categoria já existe ")
+        finally:
+            self.closeConnection()
+
+    def newConnect(self) -> None:
+        try:
+            self.connection = connect(self.db_file)
+            self.cursor = self.connection.cursor()
+
+        except Exception as e:
+            print(f"Erro {e}")
+
+    def closeConnection(self) -> None:
+        """
+        This is method close the db
+        :paramater
+        :return: None
+        """
+        self.cursor.close()
+        self.connection.close()
