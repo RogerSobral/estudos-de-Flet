@@ -106,10 +106,5 @@ class CategoryIncomeModel:
         self.cursor.close()
         self.connection.close()
 
-if __name__ == '__main__':
-    banco=CategoryIncomeModel("fincancas.db")
-    print(banco.selectCategorys())
-    print(banco.selectSingleCategory("MENTORIA"))
-    banco.deleteCategoryID(2)
-    print(banco.selectCategorys())
+
 

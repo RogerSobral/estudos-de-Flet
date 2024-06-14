@@ -98,3 +98,5 @@ class AccountIncomeModel:
         """
         self.cursor.close()
         self.connection.close()
+
+

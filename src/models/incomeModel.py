@@ -20,19 +20,19 @@ class IncomeModel:
         """)
         self.connection.commit()
 
-    def addCategory(self, name) -> None:
+    def addCategory(self, description,id_category) -> None:
         self.newConnect()
         try:
             self.cursor.execute("""
-                             INSERT INTO category_income(name)
-                             VALUES(?)
-
-                            """, (name,))
+                             INSERT INTO income(description,id_category)
+                             VALUES(?,?)
+                            """, (description,id_category))
             self.connection.commit()
         except Exception as e:
-            print("Essa Categoria já existe ")
+            print("Essa Receita já existe ")
         finally:
             self.closeConnection()
+
 
     def newConnect(self) -> None:
         try:
@@ -50,3 +50,62 @@ class IncomeModel:
         """
         self.cursor.close()
         self.connection.close()
+
+    def listIncome(self):
+        self.newConnect()
+        self.cursor.execute("""
+                                 SELECT * FROM income
+                                ;
+                                """)
+        lista = self.cursor.fetchall()
+        self.closeConnection()
+        return lista
+
+
+    def listIncomeSigle(self,description):
+        self.newConnect()
+        self.cursor.execute("""
+                                        SELECT * FROM income
+                                        WHERE description LIKE ?
+                                       """, (description,))
+        category = self.cursor.fetchone()
+        self.closeConnection()
+        return category
+
+
+    def deleteIncomeID(self,id) -> None:
+        self.newConnect()
+        self.cursor.execute("""
+                                       DELETE FROM income
+                                       where id = ?
+                                      ;
+                                      """, (id,))
+        self.connection.commit()
+        self.closeConnection()
+        print("Receita deletada com sucesso !")
+
+
+
+    def deleteIncomeName(self,description) -> None:
+        self.newConnect()
+        self.cursor.execute("""
+                                       DELETE FROM income
+                                       where description LIKE ?
+                                      """, (description,))
+        self.connection.commit()
+        self.closeConnection()
+        print("Deletado com sucesso ! ")
+
+
+
+    def UpdateIncome(self, description, id) -> None:
+        self.newConnect()
+        self.cursor.execute("""
+                                       UPDATE income 
+                                       SET description= ? 
+                                       where id = ?
+
+                                      """, (description, id))
+        self.connection.commit()
+        self.closeConnection()
+
