@@ -13,6 +13,7 @@ class LoginController:
 
         for user in self.userModel.get_all_users():
             singleUser=User(login=user[1],password=user[2])
+
             if self.infoView.name.value==singleUser.login and self.infoView.password.value==singleUser.password:
                 self.infoView.page.go("/menu")
 

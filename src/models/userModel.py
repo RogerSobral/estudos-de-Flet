@@ -8,24 +8,15 @@ import sqlite3
 class UserModel:
 
     def __init__(self):
-        self.db_file="dao/controleFinanceiro.db"
-        # self.connection = connect("dao/controleFinanceiro.db")
-        # self.cursor = self.connection.cursor()
+        self.connection = connect(self.create_path(),check_same_thread=False)
+        self.cursor = self.connection.cursor()
         self.create_table()
 
-    def create_connection(self):
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            # Change the db_file to the absolute path
-            db_file = os.path.join(sys._MEIPASS, self.db_file)
-        else:
-            db_file=self.db_file
-
-        connection = sqlite3.connect(db_file)
-        connection.row_factory = sqlite3.Row
-        connection.enable_load_extension(True)
-        sqlite_vss.load(connection)
-        connection.enable_load_extension(False)
-        return connection
+    def create_path(self):
+        caminho_do_arquivo = "dao/controleFinanceiro.db"
+        caminho_absoluto = os.path.abspath(caminho_do_arquivo)
+        diretorio = os.path.dirname(caminho_absoluto)
+        return diretorio
 
 
     def create_table(self):
@@ -41,10 +32,12 @@ class UserModel:
 
 
 
-    def add_user(self, user):
+    def add_user(self, user:User):
         self.cursor.execute("INSERT INTO users (login, password) VALUES (?, ?)",
                             (user.login, user.password))
         self.connection.commit()
+
+
 
     def get_user(self, user_id):
         self.cursor.execute("SELECT * FROM users WHERE id=?", (user_id,))
@@ -52,7 +45,9 @@ class UserModel:
 
     def get_all_users(self):
         self.cursor.execute("SELECT * FROM users")
+
         lista=self.cursor.fetchall()
+        print(lista)
         return lista
 
     def update_user(self, user_id, login, password):
