@@ -1,34 +1,46 @@
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import declarative_base
+from src.DAO.conn import ConnectionClass
+import bcrypt
 
 Base=declarative_base()
-class ConnectionClass:
-    def __init__(self,file_db):
-        self.file_db=file_db
-        self.engine = None
-        self.Session = None
 
-    def connect(self):
-        try:
-            self.engine = create_engine(self.file_db)
-            self.Session = sessionmaker(bind=self.engine)
-            with self.engine.connect() as connection:
-                print(f"Conexão estabelecida com {self.file_db}!")
-        except Exception as e:
-            print(f"Erro ao conectar-se ao banco de dados: {e}")
-
-    def get_session(self):
-        if not self.Session:
-            raise Exception("A conexão com o banco de dados não foi estabelecida.")
-        return self.Session()
-
-
-
-class User(Base):
+class UserModal(Base):
     __tablename__ = 'usuarios'
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String)
-    idade = Column(Integer)
+    senha = Column(String)
+
+    def set_senha(self, senha):
+        # Gera o salt e faz o hash da senha
+        salt = bcrypt.gensalt()
+        self.senha = bcrypt.hashpw(senha.encode('utf-8'), salt).decode('utf-8')
+
+        # Método para verificar a senha
+
+    def check_senha(self, senha):
+        return bcrypt.checkpw(senha.encode('utf-8'), self.senha.encode('utf-8'))
 
 
+
+if __name__ == '__main__':
+
+    conn = ConnectionClass('sqlite:///financas.db')
+    conn.connect()
+
+    # Obtém a sessão para interagir com o banco de dados
+    session = conn.get_session()
+
+    # Cria as tabelas no banco de dados
+    Base.metadata.create_all(conn.engine)
+
+    # Exemplo de inserção de um novo usuário
+    # novo_usuario = User(nome='maria', senha="so1234")
+    # session.add(novo_usuario)
+    # session.commit()  # Salva a transação no banco de dados
+    # print("Usuário adicionado com sucesso!")
+
+    # Exemplo de consulta
+    usuarios = session.query(UserModal).all()
+    for usuario in usuarios:
+        print(f'ID: {usuario.id}, Nome: {usuario.nome}, Idade: {usuario.senha}')

@@ -1,17 +1,27 @@
 from src.views.login import Login
 
-from src.models.entity.user import User
+from src.DAO.conn import ConnectionClass
+from src.models.entity.users import UserModal
+
 class LoginController:
 
-    def __init__(self,infoTelaLogin:Login)->None:
+    def __init__(self,infoTelaLogin:Login,modalUsuario:UserModal)->None:
         super().__init__()
+        self.conn=ConnectionClass(r"C:\Users\rogerio.sribeiro\Documents\GitHub\estudos-de-Flet\src\models\entity"
+                                  r"\financas.db")
 
+        self.modalUsuario=modalUsuario
         self.infoView=infoTelaLogin
         self.infoView.btn_enter.on_click=self.intoSystem
 
     def intoSystem(self, e)->None:
-
-        self.infoView.page.go("/menu")
+        self.conn.connect()
+        session = self.conn.get_session()
+        usuarios = session.query(UserModal).all()
+        for usuario in usuarios:
+            if (usuario.nome == self.infoView.name.value) and (usuario.senha==self.infoView.password.value):
+                print(f'ID: {usuario.id}, Nome: {usuario.nome}, Idade: {usuario.senha}')
+                self.infoView.page.go("/menu")
 
 
 
