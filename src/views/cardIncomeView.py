@@ -2,7 +2,7 @@ from flet import *
 import datetime as dt
 class CardIncomeView(BottomSheet):
     def __init__(self):
-        super().__init__()
+        super().__init__(content=None)
         self.descricaoReceita = TextField(label="Descrição")
         self.valorReceita = TextField(label="Valor R$")
         self.btnClose=IconButton(icons.CLOSE_ROUNDED)
@@ -59,7 +59,7 @@ class CardIncomeView(BottomSheet):
         )
         self.dismissible = False,
         self.is_scroll_controlled = True
-        self.content=Container(
+        self.content =Container(
                 content=Column(
                     [
                         Row(controls=[Text("Cadastro de Receita", size=18, weight=FontWeight.BOLD),
@@ -149,12 +149,7 @@ class CardIncomeView(BottomSheet):
                         bgcolor=colors.AMBER_500,
                         margin=2,
                         padding=3,
-                        #on_click= registerReceita
                         )
-
-
-
-
 
                     ],
 
