@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import declarative_base
-from src.DAO.conn import ConnectionClass
+from src.models.DAO.conn import ConnectionClass
 import bcrypt
 
 Base=declarative_base()
@@ -20,6 +20,9 @@ class UserModal(Base):
 
     def check_senha(self, senha):
         return bcrypt.checkpw(senha.encode('utf-8'), self.senha.encode('utf-8'))
+
+
+
 
 
 

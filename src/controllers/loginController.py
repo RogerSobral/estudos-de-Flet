@@ -1,15 +1,13 @@
 from src.views.login import Login
 
-from src.DAO.conn import ConnectionClass
-from src.models.entity.users import UserModal
+from src.models.DAO.conn import ConnectionClass
+from src.models.DAO.users import UserModal
 
 class LoginController:
 
-    def __init__(self,infoTelaLogin:Login,modalUsuario:UserModal)->None:
+    def __init__(self,infoTelaLogin:Login,modalUsuario:UserModal,conn:ConnectionClass)->None:
         super().__init__()
-        self.conn=ConnectionClass(r"C:\Users\rogerio.sribeiro\Documents\GitHub\estudos-de-Flet\src\models\entity"
-                                  r"\financas.db")
-
+        self.conn=conn
         self.modalUsuario=modalUsuario
         self.infoView=infoTelaLogin
         self.infoView.btn_enter.on_click=self.intoSystem
